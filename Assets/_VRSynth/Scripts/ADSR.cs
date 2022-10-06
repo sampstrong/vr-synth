@@ -6,11 +6,14 @@ using UnityEngine.Events;
 
 public class ADSR : MonoBehaviour
 {
+    public bool glideOn;
+    
     [SerializeField] private AudioMixer _mixer;
     [SerializeField] private Knob[] _aDSRKnobs = new Knob[4];
 
     private float _maxVolume = 0f;
     private float _minVolume = -80f;
+    private float _currentVolume;
 
     private float _attack;
     private float _decay;
@@ -28,6 +31,8 @@ public class ADSR : MonoBehaviour
     {
         SetAttack();
         SetDecay();
+
+        _mixer.GetFloat("mainVolume", out _currentVolume);
     }
 
     private void SetAttack()
@@ -40,10 +45,12 @@ public class ADSR : MonoBehaviour
         _decay = _aDSRKnobs[1].KnobValue;
     }
     
-    public IEnumerator TriggerAttack()
+    public IEnumerator TriggerAttack(AudioSource audioSource)
     {
         for (float t = 0; t < _attack; t += Time.deltaTime)
         {
+            //float volume = Mathf.Lerp(glideOn ? _currentVolume : _minVolume, _maxVolume, t / _attack);
+            
             float volume = Mathf.Lerp(_minVolume, _maxVolume, t / _attack);
 
             SetEnvelopeVolume(volume);
@@ -52,20 +59,23 @@ public class ADSR : MonoBehaviour
         
         SetEnvelopeVolume(_maxVolume);
 
-        StartCoroutine(TriggerDecay());
+        StartCoroutine(TriggerDecay(audioSource));
     }
 
-    public IEnumerator TriggerDecay()
+    public IEnumerator TriggerDecay(AudioSource audioSource)
     {
         for (float t = 0; t < _decay; t += Time.deltaTime)
         {
+            // float volume = Mathf.Lerp(_currentVolume, _minVolume, t / _decay);
+            
             float volume = Mathf.Lerp(_maxVolume, _minVolume, t / _decay);
 
             SetEnvelopeVolume(volume);
             yield return null;
         }
         
-        SetEnvelopeVolume(_maxVolume);
+        SetEnvelopeVolume(_minVolume);
+        audioSource.Stop();
     }
 
     private void SetEnvelopeVolume(float volume)

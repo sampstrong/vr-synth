@@ -31,7 +31,9 @@ public class SoundTrigger : MonoBehaviour
         isPressed = true;
         StopOtherAudio();
         _audioSource.Play();
-        //StartCoroutine(_aDSR.TriggerAttack());
+        
+        //_aDSR.StopAllCoroutines();
+        StartCoroutine(_aDSR.TriggerAttack(_audioSource));
     }
 
     private void StopOtherAudio()
@@ -48,12 +50,14 @@ public class SoundTrigger : MonoBehaviour
         Debug.Log("Key Released");
 
         StopThisAudio();
+        
+        // StartCoroutine(_aDSR.TriggerDecay(_audioSource));
     }
 
     private void StopThisAudio()
     {
         isPressed = false;
-        _audioSource.Stop();
+        //_audioSource.Stop();
         PlayOtherAudio();
     }
 
@@ -63,8 +67,9 @@ public class SoundTrigger : MonoBehaviour
         {
             if (audioSource.GetComponent<SoundTrigger>().isPressed)
             {
+                _audioSource.Stop();
                 audioSource.Play();
-                _aDSR.TriggerAttack();
+                StartCoroutine(_aDSR.TriggerAttack(audioSource));
                 break;
             }
         }
