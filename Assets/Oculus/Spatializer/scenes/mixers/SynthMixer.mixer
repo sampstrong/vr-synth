@@ -50,6 +50,16 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
+  - guid: f7553f93b6a2a49b19a68a77fe628461
+    name: mainVolume
+  - guid: 4a359eb13dde24436aff374772ac1eb7
+    name: distortionLevel
+  - guid: c8b8b7af6cca54595ba5cb8e94e98ba5
+    name: delayWet
+  - guid: 2dc10e624e6cf445ba131a940207cf13
+    name: delayTime
+  - guid: 141f8763c1cf040a0a40d995607512e2
+    name: mainFilterResonance
   - guid: c070b037c6e8b41698498b15e9d55fde
     name: mainFilterCutoff
   m_AudioMixerGroupViews:
@@ -75,6 +85,7 @@ AudioMixerGroupController:
   - {fileID: 24400004}
   - {fileID: -3333536541911420017}
   - {fileID: -5748980819535435566}
+  - {fileID: 94014666387990227}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -107,4 +118,30 @@ AudioMixerSnapshotController:
     f7553f93b6a2a49b19a68a77fe628461: -4
     c070b037c6e8b41698498b15e9d55fde: 22000
     2866297d10c4e45d89a53653e41dc2f2: -12.442373
+    8f951f4e65ff34764ac557a355f2e8fd: 0.48299998
+    c8b8b7af6cca54595ba5cb8e94e98ba5: 0
   m_TransitionOverrides: {}
+--- !u!244 &94014666387990227
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 98f56986b04794355b0a408ad67cf507
+  m_EffectName: Echo
+  m_MixLevel: 4c3c988c59fc34d1692e13f0487e33b3
+  m_Parameters:
+  - m_ParameterName: Delay
+    m_GUID: 2dc10e624e6cf445ba131a940207cf13
+  - m_ParameterName: Decay
+    m_GUID: 8f951f4e65ff34764ac557a355f2e8fd
+  - m_ParameterName: Max channels
+    m_GUID: 48c0c10d5a29d474ba50c26f62ae107a
+  - m_ParameterName: Drymix
+    m_GUID: 842af951ca9d443a5ae96ed52fc1b5f3
+  - m_ParameterName: Wetmix
+    m_GUID: c8b8b7af6cca54595ba5cb8e94e98ba5
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0

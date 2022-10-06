@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Oculus/Interaction/Samples/Scenes/Features/TouchHandGrab.unity
     guid: be6ac2db53044a540a337805c97f39df
-  - enabled: 1
+  - enabled: 0
     path: Assets/Oculus/Interaction/Samples/Scenes/Examples/TransformerExamples.unity
     guid: 7475942f60c376744ba1ec487d140105
+  - enabled: 1
+    path: Assets/_VRSynth/Scenes/VRSynth.unity
+    guid: 6638912ba2ec143d58ec2c5e191af740
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 279d047ff0a6645d397b1f84294dcf7b, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 0dae9a8801e2a4f738f5e8ff4d724e25, type: 2}

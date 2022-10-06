@@ -8,6 +8,8 @@ using UnityEngine.Audio;
 
 public class Knob : MonoBehaviour
 {
+    public float KnobValue { get => _knobValue; }
+    
     [Header("Audio Routing")] 
     [SerializeField] protected AudioMixer _mixer;
     

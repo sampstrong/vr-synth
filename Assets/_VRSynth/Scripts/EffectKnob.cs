@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FilterKnob : Knob
+public class EffectKnob : Knob
 {
+    [Header("Control")]
+    [SerializeField] private string parameterName;
+    
     protected override void Start()
     {
         base.Start();
@@ -13,11 +16,11 @@ public class FilterKnob : Knob
     {
         base.Update();
 
-        ControlFilter();
+        ControlParameter();
     }
 
-    private void ControlFilter()
+    private void ControlParameter()
     {
-        _mixer.SetFloat("mainFilterCutoff", _knobValue);
+        _mixer.SetFloat(parameterName, _knobValue);
     }
 }

@@ -5,34 +5,68 @@ using UnityEngine;
 
 public class SoundTrigger : MonoBehaviour
 {
-    [SerializeField] private AudioSource _audioSource;
+    [HideInInspector] public bool isPressed;
     
-    // Start is called before the first frame update
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private ADSR _aDSR;
+
+    private AudioSource[] _allAudioSources;
+
+    
     void Start()
     {
-        
+        _allAudioSources = FindObjectsOfType<AudioSource>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (!other.GetComponent<Key>()) return;
         Debug.Log("Key Pressed");
-        
+
+        PlayThisAudio();
+    }
+
+    private void PlayThisAudio()
+    {
+        isPressed = true;
+        StopOtherAudio();
         _audioSource.Play();
+        //StartCoroutine(_aDSR.TriggerAttack());
+    }
+
+    private void StopOtherAudio()
+    {
+        foreach (var audioSource in _allAudioSources)
+        {
+            audioSource.Stop();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.GetComponent<Key>()) return;
         Debug.Log("Key Released");
-        
+
+        StopThisAudio();
+    }
+
+    private void StopThisAudio()
+    {
+        isPressed = false;
         _audioSource.Stop();
+        PlayOtherAudio();
+    }
+
+    private void PlayOtherAudio()
+    {
+        foreach (var audioSource in _allAudioSources)
+        {
+            if (audioSource.GetComponent<SoundTrigger>().isPressed)
+            {
+                audioSource.Play();
+                _aDSR.TriggerAttack();
+                break;
+            }
+        }
     }
 }
