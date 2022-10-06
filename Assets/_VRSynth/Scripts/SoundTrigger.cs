@@ -43,6 +43,8 @@ public class SoundTrigger : MonoBehaviour
     {
         foreach (var audioSource in _allAudioSources)
         {
+            if (audioSource.GetComponentInParent<LoopAudio>()) continue;
+            
             audioSource.Stop();
         }
     }
@@ -75,6 +77,8 @@ public class SoundTrigger : MonoBehaviour
     {
         foreach (var audioSource in _allAudioSources)
         {
+            if (audioSource.GetComponentInParent<LoopAudio>()) continue;
+            
             if (audioSource.GetComponent<SoundTrigger>().isPressed)
             {
                 _audioSource.Stop();
