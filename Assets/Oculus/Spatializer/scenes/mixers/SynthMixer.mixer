@@ -18,6 +18,28 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &-3774371187771205338
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: cc4b27d750aea4508a22b4e68310bd58
+  m_EffectName: Flange
+  m_MixLevel: 04b0c8354252640b9a5589568d2b2b80
+  m_Parameters:
+  - m_ParameterName: Drymix
+    m_GUID: 8a0d72d7f5ae44aba8208b4d688e27c0
+  - m_ParameterName: Wetmix
+    m_GUID: a15a443fba5db427c8025732578ab2b3
+  - m_ParameterName: Depth
+    m_GUID: 8a87db02324874d36b17939fd483ed59
+  - m_ParameterName: Rate
+    m_GUID: afd1dd3b624404206b524a138163d61e
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-3333536541911420017
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -58,6 +80,8 @@ AudioMixerController:
     name: delayWet
   - guid: 2dc10e624e6cf445ba131a940207cf13
     name: delayTime
+  - guid: a15a443fba5db427c8025732578ab2b3
+    name: flangerWet
   - guid: 141f8763c1cf040a0a40d995607512e2
     name: mainFilterResonance
   - guid: c070b037c6e8b41698498b15e9d55fde
@@ -86,6 +110,7 @@ AudioMixerGroupController:
   - {fileID: -3333536541911420017}
   - {fileID: -5748980819535435566}
   - {fileID: 94014666387990227}
+  - {fileID: -3774371187771205338}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0

@@ -20,9 +20,13 @@ public class SoundTrigger : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
+        
         if (!other.GetComponent<Key>()) return;
         Debug.Log("Key Pressed");
+        
 
+        //if (!other.GetComponentInParent<Player>()) return;
+        
         PlayThisAudio();
     }
 
@@ -45,9 +49,13 @@ public class SoundTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        
         if (!other.GetComponent<Key>()) return;
         Debug.Log("Key Released");
+        
 
+        //if (!other.GetComponentInParent<Player>()) return;
+        
         StopThisAudio();
     }
 
