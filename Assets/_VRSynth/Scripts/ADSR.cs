@@ -6,7 +6,12 @@ using UnityEngine.Events;
 
 public class ADSR : MonoBehaviour
 {
-    public bool glideOn;
+    public bool glideOn = true;
+    public bool envelopeEngaged;
+    public bool decayTriggered;
+    public bool oneShotOn = true;
+
+    [HideInInspector] public AudioSource currentAudioSource;
     
     [SerializeField] private AudioMixer _mixer;
     [SerializeField] private Knob[] _aDSRKnobs = new Knob[4];
@@ -19,6 +24,8 @@ public class ADSR : MonoBehaviour
     private float _decay;
     private float _sustain;
     private float _release;
+
+    
     
     // Start is called before the first frame update
     void Start()
@@ -44,12 +51,21 @@ public class ADSR : MonoBehaviour
     {
         _decay = _aDSRKnobs[1].KnobValue;
     }
-    
-    public IEnumerator TriggerAttack(AudioSource audioSource)
+
+    public void TriggerAttack(AudioSource audioSource)
     {
+        decayTriggered = false;
+        StopAllCoroutines();
+        StartCoroutine(ApplyAttack());
+    }
+    
+    private IEnumerator ApplyAttack()
+    {
+        envelopeEngaged = true;
+        
         for (float t = 0; t < _attack; t += Time.deltaTime)
         {
-            //float volume = Mathf.Lerp(glideOn ? _currentVolume : _minVolume, _maxVolume, t / _attack);
+            // float volume = Mathf.Lerp(glideOn ? _currentVolume : _minVolume, _maxVolume, t / _attack);
             
             float volume = Mathf.Lerp(_minVolume, _maxVolume, t / _attack);
 
@@ -59,10 +75,17 @@ public class ADSR : MonoBehaviour
         
         SetEnvelopeVolume(_maxVolume);
 
-        StartCoroutine(TriggerDecay(audioSource));
+        TriggerDecay();
     }
 
-    public IEnumerator TriggerDecay(AudioSource audioSource)
+    public void TriggerDecay()
+    {
+        decayTriggered = true;
+        StopAllCoroutines();
+        StartCoroutine(ApplyDecay());
+    }
+
+    private IEnumerator ApplyDecay()
     {
         for (float t = 0; t < _decay; t += Time.deltaTime)
         {
@@ -75,7 +98,8 @@ public class ADSR : MonoBehaviour
         }
         
         SetEnvelopeVolume(_minVolume);
-        audioSource.Stop();
+        currentAudioSource.Stop();
+        envelopeEngaged = false;
     }
 
     private void SetEnvelopeVolume(float volume)

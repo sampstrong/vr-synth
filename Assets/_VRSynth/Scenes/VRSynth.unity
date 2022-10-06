@@ -551,7 +551,7 @@ MonoBehaviour:
   _mixer: {fileID: 24100000, guid: d69b9bd537c2f4f0bb92c5fa28f0d8cc, type: 2}
   units: Hz
   _minimumValue: 0
-  _maximumValue: 100
+  _maximumValue: 10
   _rangeInDegrees: 270
   _displayText: {fileID: 1162703375}
   parameterName: delayWet
@@ -601,6 +601,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6652eb5db4ae48738b970f62530bb76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  glideOn: 0
+  envelopeEngaged: 0
+  decayTriggered: 0
+  oneShotOn: 1
+  currentAudioSource: {fileID: 0}
   _mixer: {fileID: 24100000, guid: d69b9bd537c2f4f0bb92c5fa28f0d8cc, type: 2}
   _aDSRKnobs:
   - {fileID: 521096650}
@@ -2558,7 +2563,7 @@ MonoBehaviour:
   _mixer: {fileID: 24100000, guid: d69b9bd537c2f4f0bb92c5fa28f0d8cc, type: 2}
   units: 
   _minimumValue: 0.1
-  _maximumValue: 5
+  _maximumValue: 2.5
   _rangeInDegrees: 270
   _displayText: {fileID: 522043544}
 --- !u!1 &522043542
@@ -4850,7 +4855,7 @@ Transform:
   - {fileID: 2073422163}
   - {fileID: 214310327}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &836453991
 GameObject:
@@ -7976,7 +7981,7 @@ Transform:
   - {fileID: 907009403}
   - {fileID: 25902677}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1284035370
 GameObject:
