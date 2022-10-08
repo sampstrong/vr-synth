@@ -690,7 +690,8 @@ MonoBehaviour:
       m_Calls: []
   isPressed: 0
   _audioSource: {fileID: 77668203654643830}
-  _aDSR: {fileID: 0}
+  _volumeEnvelope: {fileID: 0}
+  _filterEnvelope: {fileID: 0}
 --- !u!82 &77668203654643830
 AudioSource:
   m_ObjectHideFlags: 0
@@ -700,7 +701,7 @@ AudioSource:
   m_GameObject: {fileID: 77668203654643824}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: d69b9bd537c2f4f0bb92c5fa28f0d8cc, type: 2}
+  OutputAudioMixerGroup: {fileID: 8973697779961204527, guid: d69b9bd537c2f4f0bb92c5fa28f0d8cc, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.7

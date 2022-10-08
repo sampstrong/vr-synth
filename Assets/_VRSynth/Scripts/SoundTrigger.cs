@@ -21,6 +21,7 @@ public class SoundTrigger : MonoBehaviour
     void Start()
     {
         _allAudioSources = FindObjectsOfType<AudioSource>();
+        
     }
     
     private void OnTriggerEnter(Collider other)

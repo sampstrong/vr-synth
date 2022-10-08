@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class ParticleController : MonoBehaviour
 {
-    [SerializeField] private VisualEffect _vFX;
-
+    [SerializeField] private ParticleSystem _particleSystem;
+    [SerializeField] private Material _particleMaterial;
+    [ColorUsageAttribute(true,true,0f,8f,0.125f,3f)] 
+    public Color _emissionColor;
+    
     private SoundTrigger[] _soundTriggers;
+
+    private ParticleSystem.Particle[] particles;
+
+    private Color _particleColor;
     
-    
+    // Start is called before the first frame update
     void Start()
     {
         _soundTriggers = FindObjectsOfType<SoundTrigger>();
@@ -23,33 +29,61 @@ public class ParticleController : MonoBehaviour
 
     private void StartNewParticleBehaviour()
     {
-        SpeedUpParticles();
+        //SpeedUpParticles();
         MakeParticlesGlow();
     }
 
     private void EndNewParticleBehaviour()
     {
-        SlowDownParticles();
+        //SlowDownParticles();
         MakeParticlesDim();
     }
     
     private void SpeedUpParticles()
     {
-        _vFX.SetFloat("gravityAmount", 5);
+        
     }
 
     private void SlowDownParticles()
     {
-        _vFX.SetFloat("gravityAmount", 1);
+        int numParticlesAlive = _particleSystem.GetParticles(particles);
+
+        for (int i = 0; i < numParticlesAlive; i++)
+        {
+            particles[i].velocity /= 2;
+        }
+        
+        
     }
 
     private void MakeParticlesGlow()
     {
-        _vFX.SetFloat("colorInterpolation", 1);
+        SetParticleColor(_emissionColor);
     }
 
     private void MakeParticlesDim()
     {
-        _vFX.SetFloat("colorInterpolation", 0);
+        StartCoroutine(LerpColor(_emissionColor, Color.cyan));
+    }
+
+    private IEnumerator LerpColor(Color currentColor, Color newColor)
+    {
+        float duration = 1;
+
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            _particleColor = Color.Lerp(currentColor, newColor, t / duration);
+            
+            SetParticleColor(_particleColor);
+
+            yield return null;
+        }
+
+        SetParticleColor(newColor);
+    }
+
+    private void SetParticleColor(Color color)
+    {
+        _particleMaterial.SetColor("_EmissionColor", color);
     }
 }
