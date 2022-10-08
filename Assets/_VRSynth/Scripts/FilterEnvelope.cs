@@ -6,14 +6,17 @@ public class FilterEnvelope : Envelope
 {
     [SerializeField] private LowPassFilter _lowPassFilter;
     
-    // private float _baseFrequency = 20;
+    protected override void Update()
+    {
+        base.Update();
+
+        //_maxValue = _lowPassFilter.KnobValue;
+    }
     
     protected override void SetEnvelopeValue(float value)
     {
         _lowPassFilter.allowEnvelope = true;
         
-        //float frequency = _baseFrequency * Mathf.Pow(2, value);
-
         float frequency = _lowPassFilter.ConvertOctaveToFrequency(value);
         
         _mixer.SetFloat(_parameterName, frequency);

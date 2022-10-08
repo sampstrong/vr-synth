@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LowPassFilter : EffectKnob
+public class LowPassFilter : Knob
 {
     public bool allowEnvelope;
     
@@ -28,10 +28,4 @@ public class LowPassFilter : EffectKnob
         return frequency;
     }
     
-    protected override void ControlParameter()
-    {
-        if (allowEnvelope) return;
-        
-        _mixer.SetFloat(parameterName, _knobValue);
-    }
 }
