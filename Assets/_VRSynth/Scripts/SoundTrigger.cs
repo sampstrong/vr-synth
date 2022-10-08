@@ -12,7 +12,8 @@ public class SoundTrigger : MonoBehaviour
     [HideInInspector] public bool isPressed;
     
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private ADSR _aDSR;
+    [SerializeField] private Envelope _volumeEnvelope;
+    [SerializeField] private FilterEnvelope _filterEnvelope;
 
     private AudioSource[] _allAudioSources;
 
@@ -41,7 +42,8 @@ public class SoundTrigger : MonoBehaviour
         
         isPressed = true;
         _audioSource.Play();
-        _aDSR.TriggerAttack(_audioSource);
+        _volumeEnvelope.TriggerAttack(_audioSource);
+        _filterEnvelope.TriggerAttack(_audioSource);
     }
 
     private void StopOtherAudio()
@@ -71,9 +73,14 @@ public class SoundTrigger : MonoBehaviour
     {
         isPressed = false;
 
-        if (!_aDSR.decayTriggered && !_aDSR.oneShotOn)
+        if (!_volumeEnvelope.decayTriggered && !_volumeEnvelope.oneShotOn)
         {
-            _aDSR.TriggerDecay();
+            _volumeEnvelope.TriggerDecay();
+        }
+        
+        if (!_filterEnvelope.decayTriggered && !_filterEnvelope.oneShotOn)
+        {
+            _filterEnvelope.TriggerDecay();
         }
         
         PlayOtherAudioIfPressed();
@@ -89,7 +96,8 @@ public class SoundTrigger : MonoBehaviour
             {
                 _audioSource.Stop();
                 audioSource.Play();
-                _aDSR.TriggerAttack(audioSource);
+                _volumeEnvelope.TriggerAttack(audioSource);
+                _filterEnvelope.TriggerAttack(audioSource);
                 break;
             }
         }

@@ -108,9 +108,9 @@ AudioMixerGroupController:
   m_Effects:
   - {fileID: 24400004}
   - {fileID: -3333536541911420017}
-  - {fileID: -5748980819535435566}
   - {fileID: 94014666387990227}
   - {fileID: -3774371187771205338}
+  - {fileID: -5748980819535435566}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0

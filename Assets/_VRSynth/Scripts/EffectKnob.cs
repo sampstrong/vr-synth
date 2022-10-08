@@ -5,7 +5,7 @@ using UnityEngine;
 public class EffectKnob : Knob
 {
     [Header("Control")]
-    [SerializeField] private string parameterName;
+    [SerializeField] protected string parameterName;
     
     protected override void Start()
     {
@@ -19,7 +19,7 @@ public class EffectKnob : Knob
         ControlParameter();
     }
 
-    private void ControlParameter()
+    protected virtual void ControlParameter()
     {
         _mixer.SetFloat(parameterName, _knobValue);
     }

@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class LowPassFilter : EffectKnob
 {
-    private float _startingFrequency = 20;
+    public bool allowEnvelope;
+    
+    private float _baseFrequency = 20;
 
     protected override float GetKnobValue()
     {
@@ -20,10 +22,16 @@ public class LowPassFilter : EffectKnob
     }
 
     
-    private float ConvertOctaveToFrequency(float octaveValue)
+    public float ConvertOctaveToFrequency(float octaveValue)
     {
-        float frequency = _startingFrequency * Mathf.Pow(2, octaveValue);
+        float frequency = _baseFrequency * Mathf.Pow(2, octaveValue);
         return frequency;
+    }
+    
+    protected override void ControlParameter()
+    {
+        if (allowEnvelope) return;
         
+        _mixer.SetFloat(parameterName, _knobValue);
     }
 }

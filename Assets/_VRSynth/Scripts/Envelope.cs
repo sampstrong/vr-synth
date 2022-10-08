@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 
-public class ADSR : MonoBehaviour
+public class Envelope : MonoBehaviour
 {
     public bool glideOn = true;
     public bool envelopeEngaged;
@@ -13,12 +13,13 @@ public class ADSR : MonoBehaviour
 
     [HideInInspector] public AudioSource currentAudioSource;
     
-    [SerializeField] private AudioMixer _mixer;
+    [SerializeField] protected AudioMixer _mixer;
     [SerializeField] private Knob[] _aDSRKnobs = new Knob[4];
 
-    private float _maxVolume = 0f;
-    private float _minVolume = -80f;
-    private float _currentVolume;
+    [SerializeField] protected string _parameterName;
+    [SerializeField] protected float _maxValue = 0f;
+    [SerializeField] protected float _minValue = -80f;
+    // private float _currentVolume;
 
     private float _attack;
     private float _decay;
@@ -30,7 +31,7 @@ public class ADSR : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetEnvelopeVolume(_minVolume);
+        SetEnvelopeValue(_minValue);
     }
 
     // Update is called once per frame
@@ -39,7 +40,7 @@ public class ADSR : MonoBehaviour
         SetAttack();
         SetDecay();
 
-        _mixer.GetFloat("mainVolume", out _currentVolume);
+        //_mixer.GetFloat("mainVolume", out _currentVolume);
     }
 
     private void SetAttack()
@@ -67,13 +68,13 @@ public class ADSR : MonoBehaviour
         {
             // float volume = Mathf.Lerp(glideOn ? _currentVolume : _minVolume, _maxVolume, t / _attack);
             
-            float volume = Mathf.Lerp(_minVolume, _maxVolume, t / _attack);
+            float value = Mathf.Lerp(_minValue, _maxValue, t / _attack);
 
-            SetEnvelopeVolume(volume);
+            SetEnvelopeValue(value);
             yield return null;
         }
         
-        SetEnvelopeVolume(_maxVolume);
+        SetEnvelopeValue(_maxValue);
 
         TriggerDecay();
     }
@@ -91,19 +92,19 @@ public class ADSR : MonoBehaviour
         {
             // float volume = Mathf.Lerp(_currentVolume, _minVolume, t / _decay);
             
-            float volume = Mathf.Lerp(_maxVolume, _minVolume, t / _decay);
+            float value = Mathf.Lerp(_maxValue, _minValue, t / _decay);
 
-            SetEnvelopeVolume(volume);
+            SetEnvelopeValue(value);
             yield return null;
         }
         
-        SetEnvelopeVolume(_minVolume);
+        SetEnvelopeValue(_minValue);
         currentAudioSource.Stop();
         envelopeEngaged = false;
     }
 
-    private void SetEnvelopeVolume(float volume)
+    protected virtual void SetEnvelopeValue(float value)
     {
-        _mixer.SetFloat("mainVolume", volume);
+        _mixer.SetFloat(_parameterName, value);
     }
 }
