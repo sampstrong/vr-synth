@@ -2,9 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SoundTrigger : MonoBehaviour
 {
+    public UnityEvent onTriggerEntered;
+    public UnityEvent onTriggerExited;
+    
     [HideInInspector] public bool isPressed;
     
     [SerializeField] private AudioSource _audioSource;
@@ -20,6 +24,7 @@ public class SoundTrigger : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
+        onTriggerEntered.Invoke();
         
         if (!other.GetComponent<Key>()) return;
         Debug.Log("Key Pressed");
@@ -51,6 +56,7 @@ public class SoundTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        onTriggerExited.Invoke();
         
         if (!other.GetComponent<Key>()) return;
         Debug.Log("Key Released");
