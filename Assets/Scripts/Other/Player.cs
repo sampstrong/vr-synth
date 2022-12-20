@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
+    // empty class to identify player
 }
