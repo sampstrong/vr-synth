@@ -1,21 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class to control particle system based on keys pressed
+/// </summary>
 public class ParticleController : MonoBehaviour
 {
+    // the particle system to control
     [SerializeField] private ParticleSystem _particleSystem;
+    
+    // material and color parameters for the particles
     [SerializeField] private Material _particleMaterial;
     [ColorUsageAttribute(true,true,0f,8f,0.125f,3f)] 
     public Color _emissionColor;
     
+    // array of sound triggers in the scene
     private SoundTrigger[] _soundTriggers;
-
+    
+    // array of particles in this system
     private ParticleSystem.Particle[] particles;
-
+    
+    // current color of the particles
     private Color _particleColor;
     
-    // Start is called before the first frame update
+    /// <summary>
+    /// Sets values to _soundTriggers array and subscribes to their events
+    /// for notes pressed and released
+    /// </summary>
     void Start()
     {
         _soundTriggers = FindObjectsOfType<SoundTrigger>();
@@ -27,33 +38,20 @@ public class ParticleController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Initiates new behavior for particles when event is triggered
+    /// </summary>
     private void StartNewParticleBehaviour()
     {
-        //SpeedUpParticles();
         MakeParticlesGlow();
     }
 
+    /// <summary>
+    /// Ends new behavior for particles when event is triggered
+    /// </summary>
     private void EndNewParticleBehaviour()
     {
-        //SlowDownParticles();
         MakeParticlesDim();
-    }
-    
-    private void SpeedUpParticles()
-    {
-        
-    }
-
-    private void SlowDownParticles()
-    {
-        int numParticlesAlive = _particleSystem.GetParticles(particles);
-
-        for (int i = 0; i < numParticlesAlive; i++)
-        {
-            particles[i].velocity /= 2;
-        }
-        
-        
     }
 
     private void MakeParticlesGlow()
@@ -66,6 +64,12 @@ public class ParticleController : MonoBehaviour
         StartCoroutine(LerpColor(_emissionColor, Color.cyan));
     }
 
+    /// <summary>
+    /// Lerps the color of the particles from the emmission color to the default color for a smooth fade effect
+    /// </summary>
+    /// <param name="currentColor"></param>
+    /// <param name="newColor"></param>
+    /// <returns></returns>
     private IEnumerator LerpColor(Color currentColor, Color newColor)
     {
         float duration = 1;

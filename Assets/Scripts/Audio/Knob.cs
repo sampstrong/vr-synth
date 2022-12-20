@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.Collections;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.Audio;
 
+
+/// <summary>
+/// Base class for knobs
+/// </summary>
 public class Knob : MonoBehaviour
 {
     public float KnobValue { get => _knobValue; }
@@ -26,6 +26,9 @@ public class Knob : MonoBehaviour
     [Header("UI")]
     [SerializeField] protected TextMeshProUGUI _displayText;
 
+    /// <summary>
+    /// Initializes the range based on min/max values defined in the inspector
+    /// </summary>
     protected virtual void Start()
     {
         _rangeInUnits = _maximumValue - _minimumValue;
@@ -38,7 +41,8 @@ public class Knob : MonoBehaviour
     }
 
     /// <summary>
-    /// Uses specified range in degrees and range in units to calculate the knob's value.
+    /// Uses specified range in degrees and range in units to calculate the knob's value
+    /// based on its rotation.
     /// These variables must be defined in Start for this method to work properly.
     /// </summary>
     /// <returns></returns>

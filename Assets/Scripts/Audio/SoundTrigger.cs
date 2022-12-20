@@ -1,29 +1,41 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Controls the audio from each key based on a collider set up as a trigger
+/// </summary>
 public class SoundTrigger : MonoBehaviour
 {
+    // events for keys hit and released
     public UnityEvent onTriggerEntered;
     public UnityEvent onTriggerExited;
     
+    // public bool for other classes to check if this note is pressed
     [HideInInspector] public bool isPressed;
-    
-    [SerializeField] private AudioSource _audioSource;
+
+    // envelopes that the signal runs through
     [SerializeField] private Envelope _volumeEnvelope;
     [SerializeField] private FilterEnvelope _filterEnvelope;
+    
+    // the audio source for this key
+    [SerializeField] private AudioSource _audioSource;
 
+    // array of audio sources from each key
     private AudioSource[] _allAudioSources;
 
-    
+    /// <summary>
+    /// Populates _allAudioSources with existing Audio Sources in scene
+    /// </summary>
     void Start()
     {
         _allAudioSources = FindObjectsOfType<AudioSource>();
-        
     }
     
+    /// <summary>
+    /// Triggered when this note is hit. Ensures that sound is only played
+    /// when an object with a Key Component collides with the trigger
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         onTriggerEntered.Invoke();
@@ -31,12 +43,13 @@ public class SoundTrigger : MonoBehaviour
         if (!other.GetComponent<Key>()) return;
         Debug.Log("Key Pressed");
         
-
-        //if (!other.GetComponentInParent<Player>()) return;
-        
         PlayThisAudio();
     }
 
+    /// <summary>
+    /// Plays the audio for this note. Stops all other notes' audio as this is
+    /// currently designed as a monophonic synth (ie one note at a time)
+    /// </summary>
     private void PlayThisAudio()
     {
         StopOtherAudio();
@@ -47,6 +60,9 @@ public class SoundTrigger : MonoBehaviour
         _filterEnvelope.TriggerAttack(_audioSource);
     }
 
+    /// <summary>
+    /// Stops other notes when this one is played
+    /// </summary>
     private void StopOtherAudio()
     {
         foreach (var audioSource in _allAudioSources)
@@ -57,6 +73,11 @@ public class SoundTrigger : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Triggered when this note is released. Ensures that release is only triggered
+    /// from objects with Key Components attached
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
         onTriggerExited.Invoke();
@@ -64,12 +85,12 @@ public class SoundTrigger : MonoBehaviour
         if (!other.GetComponent<Key>()) return;
         Debug.Log("Key Released");
         
-
-        //if (!other.GetComponentInParent<Player>()) return;
-        
         StopThisAudio();
     }
 
+    /// <summary>
+    /// Controls tail of audio based on envelopes
+    /// </summary>
     private void StopThisAudio()
     {
         isPressed = false;
@@ -87,6 +108,10 @@ public class SoundTrigger : MonoBehaviour
         PlayOtherAudioIfPressed();
     }
 
+    /// <summary>
+    /// Used in the case that another note is pressed while this one is still help down.
+    /// Immediately plays that note on release of this note as expected in a typical monosynth
+    /// </summary>
     private void PlayOtherAudioIfPressed()
     {
         foreach (var audioSource in _allAudioSources)

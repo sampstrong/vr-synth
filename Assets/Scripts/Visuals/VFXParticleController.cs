@@ -1,15 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
+
+/// <summary>
+/// Class to control VFX particles based on keys pressed
+/// </summary>
 public class VFXParticleController : MonoBehaviour
 {
+    // vfx graph to control
     [SerializeField] private VisualEffect _vFX;
 
+    // array of sound triggers
     private SoundTrigger[] _soundTriggers;
-    
-    
+
+    /// <summary>
+    /// Sets values to _soundTriggers array and subscribes to their events
+    /// for notes pressed and released
+    /// </summary>
     void Start()
     {
         _soundTriggers = FindObjectsOfType<SoundTrigger>();
@@ -21,35 +28,27 @@ public class VFXParticleController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Speeds up particles and makes them glow when a sound trigger is hit
+    /// </summary>
     private void StartNewParticleBehaviour()
     {
-        SpeedUpParticles();
-        MakeParticlesGlow();
-    }
-
-    private void EndNewParticleBehaviour()
-    {
-        SlowDownParticles();
-        MakeParticlesDim();
-    }
-    
-    private void SpeedUpParticles()
-    {
+        // speed up particles
         _vFX.SetFloat("gravityAmount", 5);
-    }
-
-    private void SlowDownParticles()
-    {
-        _vFX.SetFloat("gravityAmount", 1);
-    }
-
-    private void MakeParticlesGlow()
-    {
+        
+        // make particles glow
         _vFX.SetFloat("colorInterpolation", 1);
     }
 
-    private void MakeParticlesDim()
+    /// <summary>
+    /// Slows down particles and makes them dim when a sound trigger is released
+    /// </summary>
+    private void EndNewParticleBehaviour()
     {
+        // slow down particles
+        _vFX.SetFloat("gravityAmount", 1);
+        
+        // make particles dim
         _vFX.SetFloat("colorInterpolation", 0);
     }
 }
