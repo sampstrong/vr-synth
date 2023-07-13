@@ -6,25 +6,25 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/_VRSynth/Scenes/SynthTest.unity
+    path: Assets/Scenes/SynthTest.unity
     guid: 5f9636057e0ee4a0f9ec602c4affb668
   - enabled: 0
-    path: Assets/Oculus/Interaction/Samples/Scenes/Features/TouchHandGrab.unity
+    path: Assets/Other/Oculus/Interaction/Samples/Scenes/Features/TouchHandGrab.unity
     guid: be6ac2db53044a540a337805c97f39df
   - enabled: 0
-    path: Assets/Oculus/Interaction/Samples/Scenes/Examples/TransformerExamples.unity
+    path: Assets/Other/Oculus/Interaction/Samples/Scenes/Examples/TransformerExamples.unity
     guid: 7475942f60c376744ba1ec487d140105
   - enabled: 0
-    path: Assets/_VRSynth/Scenes/VRSynth-V1.unity
+    path: Assets/Scenes/VRSynth-V1.unity
     guid: 6638912ba2ec143d58ec2c5e191af740
   - enabled: 0
-    path: Assets/_VRSynth/Scenes/VRSynth-V2.unity
+    path: Assets/Scenes/VRSynth-V2.unity
     guid: f8e8ca999ba2d4bb4a966ed40a149ca9
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/_VRSynth/Scenes/VRSynth-V3.unity
+    path: Assets/Scenes/VRSynth-V3.unity
     guid: 7683665eb7a764bafa97a9ed46a70154
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 279d047ff0a6645d397b1f84294dcf7b, type: 2}
